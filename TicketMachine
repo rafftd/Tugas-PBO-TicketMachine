@@ -1,0 +1,93 @@
+import java.util.Scanner;
+
+public class TicketMachine {
+    private int price;   
+    private int balance; 
+    private int total;   
+    
+    
+    public TicketMachine(int ticketPrice) {
+        price = ticketPrice;
+        balance = 0;
+        total = 0;
+    }
+    
+    
+    public int getBalance() {
+        return balance;
+    }
+    
+    
+    public int getPrice() {
+        return price;
+    }
+    
+    
+    public void insertMoney(int amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Uang berhasil dimasukkan. Saldo saat ini: " + balance);
+        } else {
+            System.out.println("Jumlah uang tidak valid. Masukkan jumlah yang lebih dari 0.");
+        }
+    }
+    
+    
+    public void printTicket(int quantity) {
+        int totalHarga = price * quantity;
+        if (balance >= totalHarga) {
+            System.out.println("Mencetak " + quantity + " tiket...");
+            balance -= totalHarga;
+            total += totalHarga;
+            System.out.println("Saldo setelah pembelian: " + balance);
+        } else {
+            System.out.println("Saldo tidak cukup untuk membeli " + quantity + " tiket.");
+        }
+    }
+    
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Masukkan harga tiket:");
+        int hargaTiket = scanner.nextInt();
+        
+        TicketMachine mesin1 = new TicketMachine(hargaTiket);
+        
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Masukkan Uang");
+            System.out.println("2. Cek Saldo");
+            System.out.println("3. Cek Harga Tiket");
+            System.out.println("4. Cetak Tiket");
+            System.out.println("5. Keluar");
+            System.out.print("Pilih opsi: ");
+            int pilihan = scanner.nextInt();
+            
+            switch (pilihan) {
+                case 1:
+                    System.out.print("Masukkan jumlah uang: ");
+                    int amount = scanner.nextInt();
+                    mesin1.insertMoney(amount);
+                    break;
+                case 2:
+                    System.out.println("Saldo saat ini: " + mesin1.getBalance());
+                    break;
+                case 3:
+                    System.out.println("Harga tiket: " + mesin1.getPrice());
+                    break;
+                case 4:
+                    System.out.print("Masukkan jumlah tiket yang ingin dicetak: ");
+                    int quantity = scanner.nextInt();
+                    mesin1.printTicket(quantity);
+                    break;
+                case 5:
+                    System.out.println("Terima kasih telah menggunakan mesin tiket.");
+                    return;
+                default:
+                    System.out.println("Pilihan tidak valid.");
+                    break;
+            }
+        }
+    }
+}
